@@ -1,0 +1,18 @@
+10a)
+from scapy.all import *
+def callback(packet):
+    if packet.haslayer(ICMP):
+        print("ICMP Packet Detected")
+        packet.show()
+
+sniff(filter="icmp", prn=callback, count=10)
+
+10b)
+- nmap 192.168.1.1
+- nmap -sV 192.168.1.1
+
+10c)
+- Login with admin'#
+- URL : http://192.168.56.101/cgi-bin/badstore.cgi?action=admin
+- Show Current Users
+- @whole.biz

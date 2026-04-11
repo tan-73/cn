@@ -1,0 +1,19 @@
+4a)
+import scapy.all as scapy
+request = scapy.ARP()
+request.pdst = "192.168.1.1/28"
+broadcast = scapy.Ether()
+broadcast.dst = "ff:ff:ff:ff:ff:ff"
+request_broadcast = broadcast / request
+clients = scapy.srp(request_broadcast, timeout=2)[0]
+for element in clients:
+    print(element[1].psrc + " - " + element[1].hwsrc)
+
+
+4b)
+
+
+
+4c)
+- nmap 192.168.1.100-200
+- nmap 192.168.1.0/24 (subnet)

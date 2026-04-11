@@ -1,0 +1,10 @@
+12a)
+from scapy.all import * result,unanswered=traceroute(["www.example.com","www.google.com"],maxttl=20) 
+result.show()
+
+12b)
+
+12c)
+- Add any item to cart
+- DevTools -> Application -> Storage -> Cookie
+- Look for the cart cookie name

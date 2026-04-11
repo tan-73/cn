@@ -1,0 +1,16 @@
+6a)
+- Add any item to cart
+- DevTools -> Application -> Storage -> Cookie
+- Look for the cart cookie name
+
+6b)
+- nmap -O 192.168.1.1
+- nmap -A 192.168.1.1
+
+6c)
+- Login as admin using admin'#
+- http://192.168.56.101/cgi-bin/badstore.cgi?action=admin
+- Select Add User
+- View Page Source
+- Search for Hidden
+- Should see password field
