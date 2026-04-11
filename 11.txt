@@ -10,7 +10,8 @@ for element in clients:
     print(element[1].psrc + " - " + element[1].hwsrc)
 
 11b)
-
+- nc -l -p 8080 < image.jpg
+- (printf "HTTP/1.1 200 OK\r\nContent-Type: image/png\r\n\r\n"; cat ~/Desktop/cat.png) | nc -l 8080
 
 11c)
 For SSOid - 
