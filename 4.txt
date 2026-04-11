@@ -11,6 +11,15 @@ for element in clients:
 
 
 4b)
+- Open terminal : nc -l 8080
+- Open browser : localhost:8080
+- Terminal : 
+HTTP/1.1 200 OK
+Content-Type: text/plain
+Content-Length: 6
+- Press Enter twice
+- Hello!
+- See output in browser
 
 
 

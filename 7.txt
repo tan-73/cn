@@ -4,6 +4,8 @@ packet=IP(dst="8.8.8.8")/ICMP()
 send(packet)
 
 7b)
+- (printf "HTTP/1.1 200 OK\r\nContent-Type: image/png\r\n\r\n"; cat ~/Desktop/cat.png) | nc -l 8080
+- localhost:8080
 
 
 7c)

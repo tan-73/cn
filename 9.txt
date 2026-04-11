@@ -1,4 +1,5 @@
 9a)
+- (printf "HTTP/1.1 200 OK\r\nContent-Type: image/png\r\n\r\n"; cat ~/Desktop/cat.png) | nc -l 8080
 
 
 9b)

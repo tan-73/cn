@@ -6,8 +6,10 @@ result,unanswered=traceroute(["www.example.com","www.google.com"],maxttl=20)
 result.show()
 
 3b)
-- Terminal 1 : nc google.com 80
+- Terminal 1 : nc www.google.com 80
 - GET / HTTP/1.0
+- Host: www.google.com
+- HEAD / HTTP/1.0
 
 
 3c)
