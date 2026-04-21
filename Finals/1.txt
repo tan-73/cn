@@ -1,0 +1,19 @@
+1a)
+- copy /B img.jpg + exp.zip imgnew.jpg
+
+1b)
+- tcpdump -i any
+- tcpdump -i enp0s3 -w file1.pcap
+- tcpdump -r file1.pcap
+- tcpdump -i any -w capture.pcap
+- tcpdump -i any tcp
+- tcpdump -i any icmp
+- tcpdump -i enp0s3 icmp and host 192.168.1.100 -w file1.pcap
+- tcpdump -i any port 80
+- tcpdump -i any port 443
+- tcpdump -n -i enp0s3 'tcp[tcpflags] & tcp-syn != 0'
+- tcpdump -n -i enp0s3 'tcp[tcpflags] & (tcp-syn | tcp-ack) != 0' 
+- tcpdump -nn -i enp0s3 -p -e 'host bnmit.org and port 80 and tcp[tcpflags] & (tcp-syn | tcp-ack) != 0'
+
+1c)
+- 

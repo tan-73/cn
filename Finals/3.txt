@@ -1,0 +1,20 @@
+3a) working of ebc and cbc
+- openssl enc -aes-128-ebc -e -in pic_original.bmp -out pic_ecb.bmp -k 00112233445566778899aabbccddeeff
+
+3b) padding in aes
+- openssl enc -aes-128-cbc -e -in f1.txt -out f1.bin -k 00112233445566778899aabbccddeeff -iv 0102030405060708090a0b0c0d0e0f
+- openssl enc -aes-128-cbc -d -nopad -in f1.bin -out p1.txt -k 00112233445566778899aabbccddeeff -iv 0102030405060708090a0b0c0d0e0f
+
+3c)
+- - tcpdump -i any
+- tcpdump -i enp0s3 -w file1.pcap
+- tcpdump -r file1.pcap
+- tcpdump -i any -w capture.pcap
+- tcpdump -i any tcp
+- tcpdump -i any icmp
+- tcpdump -i enp0s3 icmp and host 192.168.1.100 -w file1.pcap
+- tcpdump -i any port 80
+- tcpdump -i any port 443
+- tcpdump -n -i enp0s3 'tcp[tcpflags] & tcp-syn != 0'
+- tcpdump -n -i enp0s3 'tcp[tcpflags] & (tcp-syn | tcp-ack) != 0' 
+- tcpdump -nn -i enp0s3 -p -e 'host bnmit.org and port 80 and tcp[tcpflags] & (tcp-syn | tcp-ack) != 0'

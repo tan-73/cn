@@ -1,0 +1,17 @@
+12a)
+from scapy.all import *
+target = "www.example.com"
+for port in range(20, 25):
+    packet = IP(dst=target) / TCP(dport=port, flags="S")
+    response = sr1(packet, timeout=1, verbose=0)
+    if response:
+        print("Port", port, "is open")
+
+12b)
+- nmap --script vuln 192.168.1.1
+- nmap -oN "D:\\output.txt" 192.168.1.1
+
+12c)
+- URL : http://192.168.56.101/cgi-bin/badstore.cgi?action=supplierlogin
+- Login as joe@supplier.com, password : iforgot
+- Only available action is Upload Price Lists

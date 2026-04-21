@@ -1,0 +1,14 @@
+16a)
+from scapy.all import * result,unanswered=traceroute(["www.example.com","www.google.com"],maxttl=20) 
+result.show()
+
+16b)
+- nc -l -p 8080 < image.jpg
+- (printf "HTTP/1.1 200 OK\r\nContent-Type: image/png\r\n\r\n"; cat ~/Desktop/cat.png) | nc -l 8080
+
+
+16c)
+- Add any item to cart
+- DevTools -> Application -> Storage -> Cookie
+- Look for the cart cookie name
+- <script>alert(document.cookie);</script>

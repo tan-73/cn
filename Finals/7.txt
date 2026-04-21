@@ -1,0 +1,15 @@
+7a)
+from scapy.all import * 
+
+result,unanswered=traceroute(["www.example.com","www.google.com"],maxttl=20) 
+
+result.show()
+
+7b)
+- Terminal 1 : nc www.google.com 80
+- GET / HTTP/1.0
+- Host: www.google.com
+- HEAD / HTTP/1.0
+
+7c)
+nmap -sn 192.168.1.0/24

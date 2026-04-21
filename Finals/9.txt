@@ -1,0 +1,20 @@
+9a)
+- Add any item to cart
+- DevTools -> Application -> Storage -> Cookie
+- Look for the cart cookie name
+- <script>alert(document.cookie);</script>
+
+9b)
+#!/bin/bash
+host="www.example.com" 
+read -p "Enter the starting port number: " start_port
+read -p "Enter the ending port number: " end_port
+for (( port=start_port; port<=end_port; port++ ))
+do
+    echo "Scanning port $port..."
+    nc -zv -w1 "$host" "$port" 2>&1
+done
+
+9c)
+- nmap 192.168.1.1
+- nmap -sV 192.168.1.1

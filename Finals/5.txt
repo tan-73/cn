@@ -1,0 +1,29 @@
+aa)
+- Add any item to cart
+- Open DevTools -> Applications -> Cookies
+- CartID cookie, copy value
+- URL decode (replace %3A with :)
+- Fields are timestamp : item_index : price : item_id
+- Change 11.5 to 0.01
+
+5b)
+from scapy.all import * 
+packet=IP()/TCP() 
+e_pack=Ether()/packet 
+e_pack.show()
+
+5c)
+#!/bin/bash
+host="www.example.com" 
+read -p "Enter the starting port number: " start_port
+read -p "Enter the ending port number: " end_port
+for (( port=start_port; port<=end_port; port++ ))
+do
+    echo "Scanning port $port..."
+    nc -zv -w1 "$host" "$port" 2>&1
+done
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""'
+save it as port_scan.sh
+chmod +x port_scan.sh //changing permission
+./port_scan.sh

@@ -1,0 +1,26 @@
+8a)
+import scapy.all as scapy
+request = scapy.ARP()
+request.pdst = "192.168.1.1/28"
+broadcast = scapy.Ether()
+broadcast.dst = "ff:ff:ff:ff:ff:ff"
+request_broadcast = broadcast / request
+clients = scapy.srp(request_broadcast, timeout=2)[0]
+for element in clients:
+    print(element[1].psrc + " - " + element[1].hwsrc)
+
+
+8b)
+- Open terminal : nc -l 8080
+- Open browser : localhost:8080
+- Terminal : 
+HTTP/1.1 200 OK
+Content-Type: text/plain
+Content-Length: 6
+- Press Enter twice
+- Hello!
+- See output in browser
+
+8c)
+- nmap 192.168.1.100-200
+- nmap 192.168.1.0/24 (subnet)
