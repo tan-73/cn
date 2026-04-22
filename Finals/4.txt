@@ -1,0 +1,44 @@
+4a)
+- openssl version
+
+touch plain.txt
+gedit plain.txt
+cat plain.txt
+
+openssl enc -aes-128-cbc -e -in plain.txt -out cipher1.bin -K 0123456789abcdeffedcba9876543210 -iv 00112233445566778899aabbccddeeff
+openssl enc -aes-128-cbc -e -in plain.txt -out cipher1.bin -K 0123456789abcdeffedcba9876543210 -iv 0102030405060708090a0b0c0d0e0f
+openssl enc -aes-128-cbc -d -in cipher1.bin -out output1.txt -K 0123456789abcdeffedcba9876543210 -iv 00112233445566778899aabbccddeeff
+xxd cipher1.bin
+cat output1.txt
+
+openssl enc -aes-128-ecb -e -in plain.txt -out cipher2.bin -K 0123456789abcdeffedcba9876543210
+openssl enc -aes-128-ecb -d -in cipher2.bin -out output2.txt -K 0123456789abcdeffedcba9876543210
+xxd cipher2.bin
+cat output2.txt
+
+
+4b)
+- openssl enc -aes-128-ecb -e -in img.bmp -out ecb.bin -K 00112233445566778899aabbccddeeff
+- openssl enc -aes-128-cbc -e -in img.bmp -out cbc.bin K 00112233445566778899aabbccddeeff 
+-iv 0102030405060708090a0b0c0d0e0f
+
+- head -c 54 img.bmp > header
+- tail -c +55 ecb.bin > body_ecb
+- tail -c +55 cbc.bin > body_cbc
+- cat header body_ecb > ecb.bmp
+- cat header body_cbc > cbc.bmp
+
+- eog ecb.bmp
+- eog cbc.bmp
+
+4c)
+- openssl genrsa -out key.pri 2048
+- openssl rsa -in key.pri -out key.pub -pubout
+- openssl rsa -in key.pri -noout -text
+- cat key.pub
+- echo "hello" > message.txt
+- openssl rsautl -encrypt -inkey key.pub -pubin -in message.txt -out message.enc
+- openssl rsautl -decrypt -inkey key.pri -in message.enc -out message.dec
+- openssl rand -hex 32 > secret.key
+- openssl rsautl -encrypt -inkey key.pub -pubin -in secret.key -out secret.key.enc
+- openssl rsautl -decrypt -inkey key.pri -in secret.key.enc -out secret.key.dec
