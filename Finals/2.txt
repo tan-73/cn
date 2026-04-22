@@ -1,7 +1,7 @@
 2a) hiding text in audio file
 - Open pain, write something, save as bmp image
 - open coagula light, open bmp image, go to sound > render without blue, save as wav file
-- open sonic visualizer, transform > all channels mixed
+- open sonic visualizer, layer > add spectrogram > all channels mixed
 
 2b) lsb image steganogrpahy (code)
 from PIL import Image
