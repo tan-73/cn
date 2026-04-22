@@ -1,12 +1,39 @@
 3a) working of ebc and cbc
-- openssl enc -aes-128-ebc -e -in pic_original.bmp -out pic_ecb.bmp -k 00112233445566778899aabbccddeeff
+- openssl enc -aes-128-cbc -e -in plain.txt -out cipher1.bin -k 112233445566778899
+- openssl enc -aes-128-cbc -d -in cipher1.bin -out output.txt -k 112233445566778899
+
+- openssl enc -aes-128-ecb -e -in plain.txt -out cipher1.bin -k 112233445566778899
+- openssl enc -aes-128-ecb -d -in cipher1.bin -out output.txt -k 112233445566778899
+
+- openssl enc -aes-128-ecb -e -in pic_original.bmp -out pic_ecb.bmp -k 00112233445566778899aabbccddeeff
+- openssl enc -aes-128-cbc -e -in img.bmp -out cbc1.bmp -k 00112233445566778899aabbccddeeff -iv 0102030405060708090a0b0c0d0e0f
+
+- head -c 54 img.bmp > header
+- tail -c +55 ecb1.bmp > body_ecb5
+- cat header body_ecb5 > newecb.bmp
+- eog newecb.bmp
+- cat header body_cbc5 > newcbc.bmp
+- eog newcbc.bmp
+
+
 
 3b) padding in aes
+- echo -n 12345 > f1.txt
+- openssl enc -aes-128-cbc -e -in plain.txt -out cipher.bin -k test123 # encrypt with padding
+- openssl enc -aes-128-cbc -d -in cipher.bin -out output.txt -k test123 # decrypt
+
+- xxd plain.txt
+- xxd cipher.bin
+
+- openssl enc -aes-128-cbc -e -in plain.txt -out cipher.bin -k test123 -nopad # disable padding
+- echo -n "1234567890ABCDEF" > plain16.txt
+- openssl enc -aes-128-cbc -e -in plain16.txt -out cipher16.bin -k test123 -nopad
+
 - openssl enc -aes-128-cbc -e -in f1.txt -out f1.bin -k 00112233445566778899aabbccddeeff -iv 0102030405060708090a0b0c0d0e0f
 - openssl enc -aes-128-cbc -d -nopad -in f1.bin -out p1.txt -k 00112233445566778899aabbccddeeff -iv 0102030405060708090a0b0c0d0e0f
 
 3c)
-- - tcpdump -i any
+- tcpdump -i any
 - tcpdump -i enp0s3 -w file1.pcap
 - tcpdump -r file1.pcap
 - tcpdump -i any -w capture.pcap
