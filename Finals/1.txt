@@ -1,5 +1,10 @@
 1a)
+- create 2 text files
+- zip them and name as lab1.zip
+- donwload jpg image
 - copy /B img.jpg + exp.zip imgnew.jpg
+- open imgnew.jpg in winrar, and extract
+- open /imgnew and view files
 
 1b)
 - tcpdump -i any
@@ -16,4 +21,7 @@
 - tcpdump -nn -i enp0s3 -p -e 'host bnmit.org and port 80 and tcp[tcpflags] & (tcp-syn | tcp-ack) != 0'
 
 1c)
-- 
+- HTTP : http://example.com and apply HTTP filter
+- HTTPS : https://example.com and apply TCP filter, search for syn, syn ack, ack flags
+- DNS : Visit http site and apply dns filter
+- ICMP : Open another cmd and ping example.com
